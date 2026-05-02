@@ -1,9 +1,29 @@
 "use client";
 
-import { Suspense, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { CriterionCard } from "@/components/apply/CriterionCard";
+import { VerifyButton } from "@/components/apply/VerifyButton";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { VerificationBadge } from "@/components/VerificationBadge";
+import {
+  addApplicationToListing,
+  listingIdFromEncoded,
+} from "@/lib/applications-store";
+import {
+  CATEGORY_LABELS,
+  CATEGORY_ORDER,
+  CRITERIA,
+  criterionByKey,
+  type Criterion,
+} from "@/lib/criteria";
+import {
+  encodeApplication,
+  type ApplicationData,
+  type FieldValue,
+} from "@/lib/encoding";
+import { decodeListing, type Listing } from "@/lib/listing";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
   BedDouble,
@@ -15,29 +35,9 @@ import {
   ShieldCheck,
   Zap,
 } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { CriterionCard } from "@/components/apply/CriterionCard";
-import { VerifyButton } from "@/components/apply/VerifyButton";
-import { VerificationBadge } from "@/components/VerificationBadge";
-import {
-  CRITERIA,
-  CATEGORY_LABELS,
-  CATEGORY_ORDER,
-  criterionByKey,
-  type Criterion,
-} from "@/lib/criteria";
-import {
-  encodeApplication,
-  type ApplicationData,
-  type FieldValue,
-} from "@/lib/encoding";
-import { decodeListing, type Listing } from "@/lib/listing";
-import {
-  addApplicationToListing,
-  listingIdFromEncoded,
-} from "@/lib/applications-store";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useMemo, useState } from "react";
 
 export default function ApplyPage() {
   return (
